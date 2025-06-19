@@ -1,0 +1,655 @@
+-- MBV Hub Menu completo com loading, menu principal, abinha minimizável, todos os botões funcionam,
+-- e "v2" pequeno, grosso, cinzento no canto inferior direito
+
+local player = game.Players.LocalPlayer
+local UserInputService = game:GetService("UserInputService")
+local TweenService = game:GetService("TweenService")
+local RunService = game:GetService("RunService")
+
+-- ========== LOADING ==========
+local SCALE = 1
+local loadingGui = Instance.new("ScreenGui")
+loadingGui.Name = "MBVHubLoading"
+loadingGui.Parent = player.PlayerGui
+loadingGui.IgnoreGuiInset = true
+loadingGui.ResetOnSpawn = false
+
+local bg = Instance.new("Frame")
+bg.Size = UDim2.new(1,0,1,0)
+bg.BackgroundColor3 = Color3.new(0,0,0)
+bg.BorderSizePixel = 0
+bg.Parent = loadingGui
+
+local logo = Instance.new("ImageLabel")
+logo.Size = UDim2.new(0, 96, 0, 96)
+logo.Position = UDim2.new(0.5, -48, 0.32, 0)
+logo.BackgroundTransparency = 1
+logo.ImageTransparency = 1
+logo.Image = "rbxassetid://110115706149983"
+logo.Parent = bg
+
+local loadingLabel = Instance.new("TextLabel")
+loadingLabel.Size = UDim2.new(1, 0, 0, 70)
+loadingLabel.Position = UDim2.new(0, 0, 0.46, 0)
+loadingLabel.BackgroundTransparency = 1
+loadingLabel.Text = "MBV Hub X Steal a Brainrot"
+loadingLabel.Font = Enum.Font.GothamBlack
+loadingLabel.TextSize = 42
+loadingLabel.TextColor3 = Color3.new(1, 1, 1)
+loadingLabel.TextStrokeTransparency = 0.2
+loadingLabel.TextXAlignment = Enum.TextXAlignment.Center
+loadingLabel.TextYAlignment = Enum.TextYAlignment.Center
+loadingLabel.TextTransparency = 1
+loadingLabel.Parent = bg
+
+local madeBy = Instance.new("TextLabel")
+madeBy.Size = UDim2.new(1, 0, 0, 30)
+madeBy.Position = UDim2.new(0, 0, 0.60, 0)
+madeBy.BackgroundTransparency = 1
+madeBy.Text = "Made By"
+madeBy.Font = Enum.Font.GothamBold
+madeBy.TextSize = 22
+madeBy.TextColor3 = Color3.new(1, 1, 1)
+madeBy.TextStrokeTransparency = 0.25
+madeBy.TextXAlignment = Enum.TextXAlignment.Center
+madeBy.TextYAlignment = Enum.TextYAlignment.Center
+madeBy.TextTransparency = 1
+madeBy.Parent = bg
+
+local youtube = Instance.new("TextLabel")
+youtube.Size = UDim2.new(1, 0, 0, 26)
+youtube.Position = UDim2.new(0, 0, 0.66, 0)
+youtube.BackgroundTransparency = 1
+youtube.Text = "Youtube-xrn7ato"
+youtube.Font = Enum.Font.Gotham
+youtube.TextSize = 19
+youtube.TextColor3 = Color3.new(1, 1, 1)
+youtube.TextStrokeTransparency = 0.35
+youtube.TextXAlignment = Enum.TextXAlignment.Center
+youtube.TextYAlignment = Enum.TextYAlignment.Center
+youtube.TextTransparency = 1
+youtube.Parent = bg
+
+local function fade(obj, prop, to, t)
+    local tw = TweenService:Create(obj, TweenInfo.new(t, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {[prop] = to})
+    tw:Play() return tw
+end
+
+fade(logo, "ImageTransparency", 0, 0.7)
+wait(0.3)
+fade(loadingLabel, "TextTransparency", 0, 0.7)
+wait(0.1)
+fade(madeBy, "TextTransparency", 0, 0.6)
+wait(0.05)
+fade(youtube, "TextTransparency", 0, 0.6)
+wait(2.1)
+wait(1.2)
+fade(logo, "ImageTransparency", 1, 0.6)
+fade(loadingLabel, "TextTransparency", 1, 0.6)
+fade(madeBy, "TextTransparency", 1, 0.6)
+fade(youtube, "TextTransparency", 1, 0.6)
+wait(0.65)
+loadingGui:Destroy()
+
+-- ========== ESCOLHA PC/MOBILE ==========
+local chooseGui = Instance.new("ScreenGui")
+chooseGui.Name = "MBVHubChoose"
+chooseGui.Parent = player.PlayerGui
+chooseGui.IgnoreGuiInset = true
+chooseGui.ResetOnSpawn = false
+
+local chooseFrame = Instance.new("Frame")
+chooseFrame.Size = UDim2.new(0, 420, 0, 220)
+chooseFrame.Position = UDim2.new(0.5, -210, 0.5, -110)
+chooseFrame.BackgroundColor3 = Color3.fromRGB(40,40,40)
+chooseFrame.BorderSizePixel = 0
+chooseFrame.Parent = chooseGui
+local chooseCorner = Instance.new("UICorner", chooseFrame)
+chooseCorner.CornerRadius = UDim.new(0, 20)
+
+local chooseTitle = Instance.new("TextLabel")
+chooseTitle.Size = UDim2.new(1, 0, 0, 70)
+chooseTitle.Position = UDim2.new(0, 0, 0, 10)
+chooseTitle.BackgroundTransparency = 1
+chooseTitle.Text = "Escolha o tipo de dispositivo"
+chooseTitle.Font = Enum.Font.GothamBlack
+chooseTitle.TextSize = 32
+chooseTitle.TextColor3 = Color3.new(1, 1, 1)
+chooseTitle.TextStrokeTransparency = 0.2
+chooseTitle.TextXAlignment = Enum.TextXAlignment.Center
+chooseTitle.TextYAlignment = Enum.TextYAlignment.Center
+chooseTitle.Parent = chooseFrame
+
+local pcBtn = Instance.new("TextButton")
+pcBtn.Size = UDim2.new(0.41, 0, 0, 56)
+pcBtn.Position = UDim2.new(0.08, 0, 0, 110)
+pcBtn.BackgroundColor3 = Color3.fromRGB(245,245,245)
+pcBtn.Text = "PC"
+pcBtn.Font = Enum.Font.GothamBlack
+pcBtn.TextSize = 28
+pcBtn.TextColor3 = Color3.fromRGB(20,20,20)
+pcBtn.AutoButtonColor = true
+pcBtn.Parent = chooseFrame
+local pcBtnCorner = Instance.new("UICorner", pcBtn)
+pcBtnCorner.CornerRadius = UDim.new(0, 14)
+
+local mobileBtn = Instance.new("TextButton")
+mobileBtn.Size = UDim2.new(0.41, 0, 0, 56)
+mobileBtn.Position = UDim2.new(0.51, 0, 0, 110)
+mobileBtn.BackgroundColor3 = Color3.fromRGB(245,245,245)
+mobileBtn.Text = "Mobile"
+mobileBtn.Font = Enum.Font.GothamBlack
+mobileBtn.TextSize = 28
+mobileBtn.TextColor3 = Color3.fromRGB(20,20,20)
+mobileBtn.AutoButtonColor = true
+mobileBtn.Parent = chooseFrame
+local mobileBtnCorner = Instance.new("UICorner", mobileBtn)
+mobileBtnCorner.CornerRadius = UDim.new(0, 14)
+
+local infoLabel = Instance.new("TextLabel")
+infoLabel.Size = UDim2.new(1, 0, 0, 26)
+infoLabel.Position = UDim2.new(0, 0, 1, -36)
+infoLabel.BackgroundTransparency = 1
+infoLabel.Text = "Você pode ajustar depois dando reload no script."
+infoLabel.Font = Enum.Font.Gotham
+infoLabel.TextSize = 16
+infoLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+infoLabel.TextXAlignment = Enum.TextXAlignment.Center
+infoLabel.TextYAlignment = Enum.TextYAlignment.Center
+infoLabel.Parent = chooseFrame
+
+chooseFrame.BackgroundTransparency = 1
+fade(chooseFrame, "BackgroundTransparency", 0, 0.7)
+
+local chosen = false
+pcBtn.MouseButton1Click:Connect(function() SCALE = 1; chosen = true end)
+mobileBtn.MouseButton1Click:Connect(function() SCALE = 0.68; chosen = true end)
+repeat wait() until chosen
+chooseGui:Destroy()
+
+-- ========== MENU PRINCIPAL ==========
+local BUTTON_COUNT = 8
+local BUTTON_HEIGHT = math.floor(48 * SCALE)
+local BUTTON_SPACE = math.floor(12 * SCALE)
+local TITLE_HEIGHT = math.floor(54 * SCALE)
+local TOP_PADDING = math.floor(9 * SCALE)
+local FOOTER_HEIGHT = math.floor(22 * SCALE)
+local MTEXT_HEIGHT = math.floor(20 * SCALE)
+local MTEXT_OFFSET = math.floor(10 * SCALE)
+local FOOTER_OFFSET = math.floor(6 * SCALE)
+local FRAME_W = math.floor(320 * SCALE)
+local FRAME_H = TITLE_HEIGHT + TOP_PADDING + (BUTTON_COUNT * BUTTON_HEIGHT) + ((BUTTON_COUNT-1)*BUTTON_SPACE) + MTEXT_HEIGHT + FOOTER_HEIGHT + MTEXT_OFFSET + FOOTER_OFFSET + 10
+local OUTLINE_W = FRAME_W + math.floor(8 * SCALE)
+local OUTLINE_H = FRAME_H + math.floor(8 * SCALE)
+
+local gui = Instance.new("ScreenGui")
+gui.Name = "MBVHubMenu"
+gui.Parent = player.PlayerGui
+gui.ResetOnSpawn = false
+gui.Enabled = true
+
+local outline = Instance.new("Frame")
+outline.Size = UDim2.new(0, OUTLINE_W, 0, OUTLINE_H)
+outline.Position = UDim2.new(0.5, -OUTLINE_W//2, 0.5, -OUTLINE_H//2)
+outline.BackgroundColor3 = Color3.fromRGB(0,0,0)
+outline.BorderSizePixel = 0
+outline.ZIndex = 0
+outline.Parent = gui
+local outlineCorner = Instance.new("UICorner", outline)
+outlineCorner.CornerRadius = UDim.new(0, math.floor(22*SCALE))
+
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(0, FRAME_W, 0, FRAME_H)
+frame.Position = UDim2.new(0.5, -FRAME_W//2, 0.5, -FRAME_H//2)
+frame.BackgroundColor3 = Color3.fromRGB(245, 245, 245)
+frame.BorderSizePixel = 0
+frame.Active = true
+frame.ZIndex = 1
+frame.Parent = gui
+local frameCorner = Instance.new("UICorner", frame)
+frameCorner.CornerRadius = UDim.new(0, math.floor(18*SCALE))
+
+-- Drag menu grande
+local dragging, dragInput, dragStart, startPos
+frame.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        dragging = true
+        dragStart = input.Position
+        startPos = frame.Position
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                dragging = false
+            end
+        end)
+    end
+end)
+frame.InputChanged:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+        dragInput = input
+    end
+end)
+UserInputService.InputChanged:Connect(function(input)
+    if input == dragInput and dragging then
+        local delta = input.Position - dragStart
+        frame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+        outline.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X - 4, startPos.Y.Scale, startPos.Y.Offset + delta.Y - 4)
+    end
+end)
+frame:GetPropertyChangedSignal("Position"):Connect(function()
+    outline.Position = UDim2.new(frame.Position.X.Scale, frame.Position.X.Offset - 4, frame.Position.Y.Scale, frame.Position.Y.Offset - 4)
+end)
+
+-- Título, imagem e botões minimizar/fechar
+local titleBar = Instance.new("Frame")
+titleBar.Size = UDim2.new(1, 0, 0, TITLE_HEIGHT)
+titleBar.Position = UDim2.new(0, 0, 0, 0)
+titleBar.BackgroundTransparency = 1
+titleBar.Parent = frame
+titleBar.ZIndex = 2
+
+local ratImg = Instance.new("ImageLabel")
+ratImg.Size = UDim2.new(0, math.floor(48*SCALE), 0, math.floor(48*SCALE))
+ratImg.Position = UDim2.new(0, math.floor(8*SCALE), 0, math.floor(3*SCALE))
+ratImg.BackgroundTransparency = 1
+ratImg.Image = "rbxassetid://110115706149983"
+ratImg.Parent = titleBar
+ratImg.ZIndex = 2
+local imgCorner = Instance.new("UICorner", ratImg)
+imgCorner.CornerRadius = UDim.new(1,0)
+
+local title = Instance.new("TextLabel")
+title.Size = UDim2.new(1, math.floor(-70*SCALE), 1, 0)
+title.Position = UDim2.new(0, math.floor(64*SCALE), 0, 0)
+title.BackgroundTransparency = 1
+title.Text = "MBV Hub"
+title.Font = Enum.Font.GothamBold
+title.TextSize = 36*SCALE
+title.TextColor3 = Color3.fromRGB(22, 22, 22)
+title.TextXAlignment = Enum.TextXAlignment.Left
+title.Parent = titleBar
+title.ZIndex = 2
+
+local btnAreaW = math.floor(88*SCALE)
+local btnAreaX = FRAME_W - btnAreaW - math.floor(8*SCALE)
+local btnArea = Instance.new("Frame")
+btnArea.Size = UDim2.new(0, btnAreaW, 1, 0)
+btnArea.Position = UDim2.new(0, btnAreaX, 0, 0)
+btnArea.BackgroundTransparency = 1
+btnArea.ZIndex = 3
+btnArea.Parent = titleBar
+
+local minBtn = Instance.new("TextButton")
+minBtn.Size = UDim2.new(0, math.floor(36*SCALE), 0, math.floor(36*SCALE))
+minBtn.Position = UDim2.new(0, 0, 0, math.floor(9*SCALE))
+minBtn.BackgroundColor3 = Color3.fromRGB(0,0,0)
+minBtn.Text = "-"
+minBtn.Font = Enum.Font.GothamBold
+minBtn.TextSize = 22*SCALE
+minBtn.TextColor3 = Color3.fromRGB(255,255,255)
+minBtn.BorderSizePixel = 0
+minBtn.ZIndex = 4
+minBtn.Parent = btnArea
+local minCorner = Instance.new("UICorner", minBtn)
+minCorner.CornerRadius = UDim.new(0,math.floor(12*SCALE))
+
+local closeBtn = Instance.new("TextButton")
+closeBtn.Size = UDim2.new(0, math.floor(36*SCALE), 0, math.floor(36*SCALE))
+closeBtn.Position = UDim2.new(0, math.floor(44*SCALE), 0, math.floor(9*SCALE))
+closeBtn.BackgroundColor3 = Color3.fromRGB(0,0,0)
+closeBtn.Text = "×"
+closeBtn.Font = Enum.Font.GothamBold
+closeBtn.TextSize = 22*SCALE
+closeBtn.TextColor3 = Color3.fromRGB(255,255,255)
+closeBtn.BorderSizePixel = 0
+closeBtn.ZIndex = 4
+closeBtn.Parent = btnArea
+local closeCorner = Instance.new("UICorner", closeBtn)
+closeCorner.CornerRadius = UDim.new(0,math.floor(12*SCALE))
+closeBtn.MouseButton1Click:Connect(function()
+    gui.Enabled = false
+end)
+
+-- Abinha minimizada (centralizada, só botão central é clicável, resto arrastável)
+local minTabW = math.floor(160*SCALE)
+local minTabH = math.floor(44*SCALE)
+local minBtnW = math.floor(80*SCALE)
+local minBtnH = math.floor(32*SCALE)
+
+local minimizedTab = Instance.new("Frame")
+minimizedTab.Size = UDim2.new(0, minTabW, 0, minTabH)
+minimizedTab.BackgroundColor3 = Color3.fromRGB(0,0,0)
+minimizedTab.BorderSizePixel = 0
+minimizedTab.Visible = false
+minimizedTab.Active = true
+minimizedTab.Parent = gui
+local minTabCorner = Instance.new("UICorner", minimizedTab)
+minTabCorner.CornerRadius = UDim.new(0,math.floor(16*SCALE))
+
+local minTabBtn = Instance.new("TextButton")
+minTabBtn.Size = UDim2.new(0, minBtnW, 0, minBtnH)
+minTabBtn.Position = UDim2.new(0.5, -minBtnW/2, 0.5, -minBtnH/2)
+minTabBtn.BackgroundColor3 = Color3.fromRGB(40,40,40)
+minTabBtn.Text = "-"
+minTabBtn.Font = Enum.Font.GothamBold
+minTabBtn.TextSize = 26*SCALE
+minTabBtn.TextColor3 = Color3.fromRGB(255,255,255)
+minTabBtn.BorderSizePixel = 0
+minTabBtn.ZIndex = 2
+minTabBtn.Parent = minimizedTab
+local minTabBtnCorner = Instance.new("UICorner", minTabBtn)
+minTabBtnCorner.CornerRadius = UDim.new(0,math.floor(13*SCALE))
+
+local function centerMinimizedTab()
+    minimizedTab.Position = UDim2.new(0.5, -minimizedTab.AbsoluteSize.X/2, 0.5, -minimizedTab.AbsoluteSize.Y/2)
+end
+minimizedTab:GetPropertyChangedSignal("AbsoluteSize"):Connect(centerMinimizedTab)
+
+local function setMinimized(min)
+    frame.Visible = not min
+    outline.Visible = not min
+    minimizedTab.Visible = min
+    if min then
+        centerMinimizedTab()
+    end
+end
+minBtn.MouseButton1Click:Connect(function() setMinimized(true) end)
+minTabBtn.MouseButton1Click:Connect(function() setMinimized(false) end)
+
+-- Drag da abinha minimizada (toda a área exceto botão é arrastável)
+local miniDragging, miniDragInput, miniDragStart, miniStartPos
+minimizedTab.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        if not minTabBtn or not minTabBtn.AbsolutePosition then return end
+        local mouse = input.Position
+        local btnPos = minTabBtn.AbsolutePosition
+        local btnSize = minTabBtn.AbsoluteSize
+        if mouse.X < btnPos.X or mouse.X > btnPos.X + btnSize.X or mouse.Y < btnPos.Y or mouse.Y > btnPos.Y + btnSize.Y then
+            miniDragging = true
+            miniDragStart = input.Position
+            miniStartPos = minimizedTab.Position
+            input.Changed:Connect(function()
+                if input.UserInputState == Enum.UserInputState.End then
+                    miniDragging = false
+                end
+            end)
+        end
+    end
+end)
+minimizedTab.InputChanged:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+        miniDragInput = input
+    end
+end)
+UserInputService.InputChanged:Connect(function(input)
+    if input == miniDragInput and miniDragging then
+        local delta = input.Position - miniDragStart
+        minimizedTab.Position = UDim2.new(miniStartPos.X.Scale, miniStartPos.X.Offset + delta.X, miniStartPos.Y.Scale, miniStartPos.Y.Offset + delta.Y)
+    end
+end)
+
+-- BOTÕES DE FUNÇÃO
+local buttonLabels = {
+    "Jump Infinito", "God Mode", "Botão rapido", "Perseguir mais próximo",
+    "Voar [OP]", "Forçar Reset", "Ficar Invisível", "NoClip"
+}
+local buttonObjs = {}
+for i, text in ipairs(buttonLabels) do
+    local y = TITLE_HEIGHT + TOP_PADDING + (i-1)*(BUTTON_HEIGHT + BUTTON_SPACE)
+    local btnOutline = Instance.new("Frame")
+    btnOutline.Size = UDim2.new(0.87, 0, 0, BUTTON_HEIGHT)
+    btnOutline.Position = UDim2.new(0.065, 0, 0, y)
+    btnOutline.BackgroundColor3 = Color3.fromRGB(0,0,0)
+    btnOutline.BorderSizePixel = 0
+    btnOutline.ZIndex = 2
+    btnOutline.Parent = frame
+    local btnOutlineCorner = Instance.new("UICorner", btnOutline)
+    btnOutlineCorner.CornerRadius = UDim.new(0, math.floor(16*SCALE))
+    local btn = Instance.new("TextButton")
+    btn.Size = UDim2.new(1, -math.floor(8*SCALE), 1, -math.floor(8*SCALE))
+    btn.Position = UDim2.new(0, math.floor(4*SCALE), 0, math.floor(4*SCALE))
+    btn.BackgroundColor3 = Color3.fromRGB(255,255,255)
+    btn.Text = text
+    btn.Font = Enum.Font.GothamBlack
+    btn.TextSize = 19*SCALE
+    btn.TextColor3 = Color3.fromRGB(26,26,26)
+    btn.BorderSizePixel = 0
+    btn.AutoButtonColor = true
+    btn.ZIndex = 3
+    btn.Parent = btnOutline
+    local btnCorner = Instance.new("UICorner", btn)
+    btnCorner.CornerRadius = UDim.new(0, math.floor(12*SCALE))
+    btn.MouseEnter:Connect(function() btn.BackgroundColor3 = Color3.fromRGB(240,240,240) end)
+    btn.MouseLeave:Connect(function() btn.BackgroundColor3 = Color3.new(1,1,1) end)
+    buttonObjs[i] = btn
+end
+
+-- Funções dos botões (todos funcionam)
+local jumpActive, jumpConn = false, nil
+buttonObjs[1].MouseButton1Click:Connect(function()
+    jumpActive = not jumpActive
+    buttonObjs[1].Text = jumpActive and "Jump Infinito [ON]" or "Jump Infinito"
+    if jumpActive and not jumpConn then
+        jumpConn = UserInputService.JumpRequest:Connect(function()
+            if jumpActive then
+                local char = player.Character or player.CharacterAdded:Wait()
+                local humanoid = char:FindFirstChildOfClass("Humanoid")
+                if humanoid then humanoid:ChangeState(Enum.HumanoidStateType.Jumping) end
+            end
+        end)
+    elseif not jumpActive and jumpConn then
+        jumpConn:Disconnect() jumpConn = nil
+    end
+end)
+local godActive, godConn = false, nil
+buttonObjs[2].MouseButton1Click:Connect(function()
+    godActive = not godActive
+    buttonObjs[2].Text = godActive and "God Mode [ON]" or "God Mode"
+    local function enableGod()
+        local char = player.Character or player.CharacterAdded:Wait()
+        local humanoid = char:FindFirstChildOfClass("Humanoid")
+        if humanoid then
+            if godConn then godConn:Disconnect() end
+            godConn = humanoid.HealthChanged:Connect(function()
+                if godActive then humanoid.Health = humanoid.MaxHealth end
+            end)
+        end
+    end
+    if godActive then
+        enableGod()
+        player.CharacterAdded:Connect(function()
+            if godActive then enableGod() end
+        end)
+    elseif godConn then godConn:Disconnect(); godConn = nil end
+end)
+local function fastenProximityPrompt(prompt)
+    if prompt:IsA("ProximityPrompt") then
+        prompt.HoldDuration = 0
+        prompt.Enabled = true
+    end
+end
+local function fastenAllProximityPrompts()
+    for _, obj in ipairs(workspace:GetDescendants()) do
+        if obj:IsA("ProximityPrompt") then
+            fastenProximityPrompt(obj)
+        end
+    end
+end
+fastenAllProximityPrompts()
+workspace.DescendantAdded:Connect(function(obj)
+    if obj:IsA("ProximityPrompt") then
+        task.wait()
+        fastenProximityPrompt(obj)
+    end
+end)
+buttonObjs[3].MouseButton1Click:Connect(function()
+    fastenAllProximityPrompts()
+    buttonObjs[3].Text = "Botão rapido [ON!]"
+    wait(1.2)
+    buttonObjs[3].Text = "Botão rapido"
+end)
+local pursuing = false
+buttonObjs[4].MouseButton1Click:Connect(function()
+    pursuing = not pursuing
+    buttonObjs[4].Text = pursuing and "Perseguindo..." or "Perseguir mais próximo"
+    if pursuing then
+        spawn(function()
+            while pursuing and RunService.RenderStepped:Wait() do
+                local myChar = player.Character
+                local myRoot = myChar and myChar:FindFirstChild("HumanoidRootPart")
+                if not myRoot then break end
+                local closest, dist = nil, math.huge
+                for _, p in ipairs(game.Players:GetPlayers()) do
+                    if p ~= player and p.Character and p.Character:FindFirstChild("HumanoidRootPart") then
+                        local d = (p.Character.HumanoidRootPart.Position - myRoot.Position).magnitude
+                        if d < dist then
+                            closest = p
+                            dist = d
+                        end
+                    end
+                end
+                if closest then
+                    local targetRoot = closest.Character.HumanoidRootPart
+                    local speed = 32
+                    local direction = (targetRoot.Position - myRoot.Position)
+                    if direction.Magnitude > 2 then
+                        myRoot.Velocity = direction.Unit * speed
+                    else
+                        myRoot.Velocity = Vector3.new(0,0,0)
+                    end
+                end
+            end
+            local root = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
+            if root then root.Velocity = Vector3.new(0,0,0) end
+        end)
+    else
+        local root = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
+        if root then root.Velocity = Vector3.new(0,0,0) end
+    end
+end)
+local flying, flyConn = false, nil
+buttonObjs[5].MouseButton1Click:Connect(function()
+    flying = not flying
+    buttonObjs[5].Text = flying and "Voando..." or "Voar [OP]"
+    local speed = 28
+    if flying then
+        local char = player.Character
+        local humanoid = char and char:FindFirstChildWhichIsA("Humanoid")
+        local root = char and char:FindFirstChild("HumanoidRootPart")
+        if humanoid and root then
+            humanoid.PlatformStand = true
+            flyConn = RunService.RenderStepped:Connect(function()
+                if not flying then return end
+                local moveDir = humanoid.MoveDirection
+                local velocity = moveDir * speed
+                if UserInputService:IsKeyDown(Enum.KeyCode.Space) then
+                    velocity = velocity + Vector3.new(0, speed, 0)
+                end
+                if UserInputService:IsKeyDown(Enum.KeyCode.LeftControl) or UserInputService:IsKeyDown(Enum.KeyCode.LeftShift) or UserInputService:IsKeyDown(Enum.KeyCode.X) then
+                    velocity = velocity + Vector3.new(0, -speed, 0)
+                end
+                root.Velocity = velocity
+            end)
+        end
+    else
+        if flyConn then flyConn:Disconnect() flyConn = nil end
+        local char = player.Character
+        local humanoid = char and char:FindFirstChildWhichIsA("Humanoid")
+        if humanoid then
+            humanoid.PlatformStand = false
+        end
+        local root = char and char:FindFirstChild("HumanoidRootPart")
+        if root then root.Velocity = Vector3.new() end
+        buttonObjs[5].Text = "Voar [OP]"
+    end
+end)
+buttonObjs[6].MouseButton1Click:Connect(function()
+    local char = player.Character
+    if char then
+        local humanoid = char:FindFirstChildOfClass("Humanoid")
+        if humanoid then
+            humanoid.Health = 0
+        end
+    end
+end)
+local invisibleActive = false
+buttonObjs[7].MouseButton1Click:Connect(function()
+    invisibleActive = not invisibleActive
+    buttonObjs[7].Text = invisibleActive and "Invisível [ON]" or "Ficar Invisível"
+    local char = player.Character
+    if char then
+        for _, part in ipairs(char:GetDescendants()) do
+            if part:IsA("BasePart") or part:IsA("Decal") then
+                part.LocalTransparencyModifier = invisibleActive and 1 or 0
+            elseif part:IsA("Accessory") and part:FindFirstChild("Handle") then
+                part.Handle.LocalTransparencyModifier = invisibleActive and 1 or 0
+            elseif part:IsA("ParticleEmitter") or part:IsA("Trail") then
+                part.Enabled = not invisibleActive
+            end
+        end
+    end
+end)
+local noclipActive = false
+buttonObjs[8].MouseButton1Click:Connect(function()
+    noclipActive = not noclipActive
+    buttonObjs[8].Text = noclipActive and "NoClip [ON]" or "NoClip"
+end)
+RunService.Stepped:Connect(function()
+    if noclipActive then
+        local char = player.Character
+        if char then
+            for _, part in ipairs(char:GetDescendants()) do
+                if part:IsA("BasePart") and part.CanCollide then
+                    part.CanCollide = false
+                end
+            end
+        end
+    end
+end)
+
+-- TEXTO "PRESSIONE M PARA ABRIR/FECHAR O MENU"
+local mtext = Instance.new("TextLabel")
+mtext.Size = UDim2.new(1, -math.floor(10*SCALE), 0, MTEXT_HEIGHT)
+mtext.Position = UDim2.new(0, math.floor(5*SCALE), 0, FRAME_H - FOOTER_HEIGHT - MTEXT_HEIGHT - MTEXT_OFFSET)
+mtext.BackgroundTransparency = 1
+mtext.Text = "Pressione M para abrir/fechar o menu"
+mtext.Font = Enum.Font.GothamBold
+mtext.TextSize = 16*SCALE
+mtext.TextColor3 = Color3.fromRGB(60, 60, 60)
+mtext.TextXAlignment = Enum.TextXAlignment.Center
+mtext.Parent = frame
+
+-- RODAPÉ
+local footer = Instance.new("TextLabel")
+footer.Size = UDim2.new(1, -math.floor(10*SCALE), 0, FOOTER_HEIGHT)
+footer.Position = UDim2.new(0, math.floor(5*SCALE), 1, -FOOTER_HEIGHT - FOOTER_OFFSET)
+footer.BackgroundTransparency = 1
+footer.Text = "Script made by xrn7ato"
+footer.Font = Enum.Font.GothamBlack
+footer.TextSize = 14*SCALE
+footer.TextColor3 = Color3.fromRGB(60, 60, 60)
+footer.TextXAlignment = Enum.TextXAlignment.Center
+footer.Parent = frame
+
+-- "v2" no canto inferior direito
+local versionLabel = Instance.new("TextLabel")
+versionLabel.Size = UDim2.new(0, 24, 0, 18)
+versionLabel.Position = UDim2.new(1, -32, 1, -20)
+versionLabel.BackgroundTransparency = 1
+versionLabel.Text = "v2"
+versionLabel.Font = Enum.Font.GothamBold
+versionLabel.TextSize = 13
+versionLabel.TextColor3 = Color3.fromRGB(90, 90, 90)
+versionLabel.TextXAlignment = Enum.TextXAlignment.Right
+versionLabel.TextYAlignment = Enum.TextYAlignment.Bottom
+versionLabel.Parent = frame
+
+-- TOGGLE MENU COM "M"
+UserInputService.InputBegan:Connect(function(input, gpe)
+    if not gpe and input.KeyCode == Enum.KeyCode.M then
+        local menuVisible = not frame.Visible
+        setMinimized(false)
+        frame.Visible = menuVisible
+        outline.Visible = menuVisible
+        minimizedTab.Visible = false
+    end
+end)
